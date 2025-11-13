@@ -5,6 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "server": "node server/email-api.js",
+    "dev:full": "concurrently \"npm run dev\" \"npm run server\"",
     "kill": "fuser -k 5000/tcp",
     "build": "tsc -b --noCheck && vite build",
     "lint": "eslint .",
@@ -73,7 +75,12 @@
     "tw-animate-css": "^1.2.4",
     "uuid": "^11.1.0",
     "vaul": "^1.1.2",
-    "zod": "^3.25.76"
+    "zod": "^3.25.76",
+    "@sendgrid/mail": "^8.1.3",
+    "express": "^4.19.2",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "concurrently": "^8.2.2"
   },
   "devDependencies": {
     "@eslint/js": "^9.21.0",

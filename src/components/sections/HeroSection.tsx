@@ -12,6 +12,9 @@ import {
   Robot,
 } from "@phosphor-icons/react";
 import { motion } from "framer-motion";
+import { useState, useRef } from "react";
+import videoPath from "@/assets/videos/videos.mp4";
+import { PartnerModal } from "@/components/PartnerModal";
 
 interface HeroSectionProps {
   onDemoClick: () => void;
@@ -204,6 +207,27 @@ export function HeroSection({
   onExploreClick,
   onLaunchClick,
 }: HeroSectionProps) {
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [showControls, setShowControls] = useState(true);
+  const [isPartnerModalOpen, setIsPartnerModalOpen] = useState(false);
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  const handlePlayPause = () => {
+    if (videoRef.current) {
+      if (isPlaying) {
+        videoRef.current.pause();
+        setIsPlaying(false);
+        setShowControls(true);
+      } else {
+        videoRef.current.play();
+        setIsPlaying(true);
+        setShowControls(false);
+        // Show controls again after 3 seconds
+        setTimeout(() => setShowControls(true), 3000);
+      }
+    }
+  };
+
   return (
     <section
       id="home"
@@ -435,11 +459,10 @@ export function HeroSection({
             transition={{ delay: 0.6 }}
           >
             {/* cspell:disable-next-line */}
-            Savoira AI Agents automatically parse trainer profiles on the fly
-            — from resumes, emails, or LinkedIn — and convert them into
-            structured, searchable profiles. You don't even need to open the
-            app. The system simply understands what you need — who's skilled,
-            available, and ready.
+            Savoira decodes human expertise with precision. It reads what others
+            skim — extracting skills, availability, and alignment from every
+            profile, instantly. The intelligence works quietly, so your focus
+            stays on decisions, not data.
           </motion.p>
 
           <motion.div
@@ -477,7 +500,7 @@ export function HeroSection({
               </Button>
             </motion.div>
             <motion.button
-              onClick={onExploreClick}
+              onClick={() => setIsPartnerModalOpen(true)}
               className="ghost-button text-base px-8 h-12 rounded-lg font-medium border-2 border-[#2563EB] relative overflow-hidden"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.98 }}
@@ -488,7 +511,7 @@ export function HeroSection({
                 transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
               />
               <span className="text-white font-semibold relative z-10">
-                Explore Features
+                Partner with us
               </span>
             </motion.button>
           </motion.div>
@@ -510,200 +533,266 @@ export function HeroSection({
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, delay: 0.6 }}
         >
-          <div className="relative mx-auto max-w-5xl">
-            <motion.div
-              className="absolute -inset-4 bg-gradient-to-r from-primary/20 via-accent/20 to-cyan-400/20 rounded-2xl blur-2xl"
-              animate={{
-                opacity: [0.3, 0.6, 0.3],
-                scale: [0.95, 1.05, 0.95],
-              }}
-              transition={{
-                duration: 4,
-                repeat: Infinity,
-                ease: "easeInOut",
-              }}
-            />
-            <div className="relative rounded-xl border border-white/10 bg-gradient-to-br from-white/5 to-white/[0.02] backdrop-blur-xl p-8 shadow-2xl">
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <motion.div
-                  className="relative overflow-hidden rounded-xl bg-gradient-to-br from-blue-500/10 to-blue-600/5 p-6 border border-blue-500/20 transition-all duration-300"
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.8, duration: 0.6 }}
-                  whileHover={{
-                    scale: 1.05,
-                    borderColor: "rgba(37,99,235,0.4)",
-                    boxShadow: "0 10px 40px rgba(37,99,235,0.2)",
-                  }}
-                >
-                  <motion.div
-                    className="absolute top-0 right-0 w-20 h-20 bg-blue-500/20 rounded-full blur-xl"
-                    animate={{
-                      scale: [1, 1.5, 1],
-                      opacity: [0.3, 0.6, 0.3],
-                    }}
-                    transition={{
-                      duration: 3,
-                      repeat: Infinity,
-                      ease: "easeInOut",
-                    }}
-                  />
-                  <motion.div
-                    whileHover={{ rotate: 360 }}
-                    transition={{ duration: 0.6 }}
-                  >
-                    <Sparkle
-                      className="w-8 h-8 text-blue-400 mb-3 transition-colors duration-300"
-                      weight="fill"
-                    />
-                  </motion.div>
-                  <motion.div
-                    className="text-4xl font-bold text-white mb-2"
-                    initial={{ scale: 0 }}
-                    animate={{ scale: 1 }}
-                    transition={{ delay: 1, type: "spring", stiffness: 200 }}
-                  >
-                    98%
-                  </motion.div>
-                  <div className="text-sm text-gray-400 transition-colors duration-300">
-                    Profile Accuracy
-                  </div>
-                </motion.div>
-
-                <motion.div
-                  className="relative overflow-hidden rounded-xl bg-gradient-to-br from-violet-500/10 to-violet-600/5 p-6 border border-violet-500/20 transition-all duration-300"
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 1, duration: 0.6 }}
-                  whileHover={{
-                    scale: 1.05,
-                    borderColor: "rgba(139,92,246,0.4)",
-                    boxShadow: "0 10px 40px rgba(139,92,246,0.2)",
-                  }}
-                >
-                  <motion.div
-                    className="absolute top-0 right-0 w-20 h-20 bg-violet-500/20 rounded-full blur-xl"
-                    animate={{
-                      scale: [1, 1.5, 1],
-                      opacity: [0.3, 0.6, 0.3],
-                    }}
-                    transition={{
-                      duration: 3,
-                      repeat: Infinity,
-                      ease: "easeInOut",
-                      delay: 0.5,
-                    }}
-                  />
-                  <motion.div
-                    animate={{
-                      rotate: [0, -10, 10, -10, 0],
-                    }}
-                    transition={{
-                      duration: 2,
-                      repeat: Infinity,
-                      ease: "easeInOut",
-                    }}
-                  >
-                    <Lightning
-                      className="w-8 h-8 text-violet-400 mb-3 transition-colors duration-300"
-                      weight="fill"
-                    />
-                  </motion.div>
-                  <motion.div
-                    className="text-4xl font-bold text-white mb-2"
-                    initial={{ scale: 0 }}
-                    animate={{ scale: 1 }}
-                    transition={{ delay: 1.2, type: "spring", stiffness: 200 }}
-                  >
-                    70%
-                  </motion.div>
-                  <div className="text-sm text-gray-400 transition-colors duration-300">
-                    Time Saved
-                  </div>
-                </motion.div>
-
-                <motion.div
-                  className="relative overflow-hidden rounded-xl bg-gradient-to-br from-cyan-500/10 to-cyan-600/5 p-6 border border-cyan-500/20 transition-all duration-300"
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 1.2, duration: 0.6 }}
-                  whileHover={{
-                    scale: 1.05,
-                    borderColor: "rgba(34,211,238,0.4)",
-                    boxShadow: "0 10px 40px rgba(34,211,238,0.2)",
-                  }}
-                >
-                  <motion.div
-                    className="absolute top-0 right-0 w-20 h-20 bg-cyan-500/20 rounded-full blur-xl"
-                    animate={{
-                      scale: [1, 1.5, 1],
-                      opacity: [0.3, 0.6, 0.3],
-                    }}
-                    transition={{
-                      duration: 3,
-                      repeat: Infinity,
-                      ease: "easeInOut",
-                      delay: 1,
-                    }}
-                  />
-                  <motion.div
-                    animate={{
-                      scale: [1, 1.1, 1],
-                    }}
-                    transition={{
-                      duration: 2,
-                      repeat: Infinity,
-                      ease: "easeInOut",
-                    }}
-                  >
-                    <Brain
-                      className="w-8 h-8 text-cyan-400 mb-3 transition-colors duration-300"
-                      weight="duotone"
-                    />
-                  </motion.div>
-                  <motion.div
-                    className="text-4xl font-bold text-white mb-2"
-                    initial={{ scale: 0 }}
-                    animate={{ scale: 1 }}
-                    transition={{ delay: 1.4, type: "spring", stiffness: 200 }}
-                  >
-                    24/7
-                  </motion.div>
-                  <div className="text-sm text-gray-400 transition-colors duration-300">
-                    AI Monitoring
-                  </div>
-                </motion.div>
-              </div>
-
+          <div className="relative mx-auto max-w-7xl">
+            <div className="grid grid-cols-1 lg:grid-cols-5 gap-8 items-stretch">
+              {/* Left Panel: Compact Stats */}
               <motion.div
-                className="mt-8 pt-8 border-t border-white/10"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 1.2 }}
+                className="lg:col-span-2"
+                initial={{ opacity: 0, x: -50 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.8, duration: 0.8 }}
               >
-                <p className="text-sm font-medium text-gray-300 mb-4">
-                  Smart Agent Capabilities:
-                </p>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm text-gray-400">
-                  <div className="flex items-start gap-2">
-                    <div className="w-1.5 h-1.5 rounded-full bg-primary mt-1.5 flex-shrink-0" />
-                    <span>
-                      Auto-extracts skills, rates, certifications, and locations
-                    </span>
+                <div className="bg-gradient-to-br from-slate-900/50 to-slate-800/30 backdrop-blur-xl border border-white/10 rounded-2xl p-6 h-full">
+                  <div className="mb-6">
+                    <h3 className="text-xl font-bold text-white mb-2">
+                      Performance Metrics
+                    </h3>
+                    <p className="text-gray-400 text-xs">
+                      Real-time insights from our AI platform
+                    </p>
                   </div>
-                  <div className="flex items-start gap-2">
-                    <div className="w-1.5 h-1.5 rounded-full bg-accent mt-1.5 flex-shrink-0" />
-                    <span>
-                      Detects gaps or outdated data and nudges trainers to
-                      update
-                    </span>
+
+                  {/* Compact Stats Grid */}
+                  <div className="space-y-4 mb-6">
+                    <motion.div
+                      className="flex items-center gap-4 p-4 rounded-lg bg-gradient-to-r from-blue-500/10 to-blue-600/5 border border-blue-500/20"
+                      whileHover={{
+                        scale: 1.02,
+                        borderColor: "rgba(37,99,235,0.4)",
+                      }}
+                      transition={{ duration: 0.3 }}
+                    >
+                      <div className="w-10 h-10 bg-blue-500/20 rounded-lg flex items-center justify-center flex-shrink-0">
+                        <Sparkle
+                          className="w-5 h-5 text-blue-400"
+                          weight="fill"
+                        />
+                      </div>
+                      <div>
+                        <div className="text-2xl font-bold text-white">98%</div>
+                        <div className="text-xs text-gray-400">
+                          Profile Accuracy
+                        </div>
+                      </div>
+                    </motion.div>
+
+                    <motion.div
+                      className="flex items-center gap-4 p-4 rounded-lg bg-gradient-to-r from-violet-500/10 to-violet-600/5 border border-violet-500/20"
+                      whileHover={{
+                        scale: 1.02,
+                        borderColor: "rgba(139,92,246,0.4)",
+                      }}
+                      transition={{ duration: 0.3 }}
+                    >
+                      <div className="w-10 h-10 bg-violet-500/20 rounded-lg flex items-center justify-center flex-shrink-0">
+                        <Lightning
+                          className="w-5 h-5 text-violet-400"
+                          weight="fill"
+                        />
+                      </div>
+                      <div>
+                        <div className="text-2xl font-bold text-white">70%</div>
+                        <div className="text-xs text-gray-400">Time Saved</div>
+                      </div>
+                    </motion.div>
+
+                    <motion.div
+                      className="flex items-center gap-4 p-4 rounded-lg bg-gradient-to-r from-cyan-500/10 to-cyan-600/5 border border-cyan-500/20"
+                      whileHover={{
+                        scale: 1.02,
+                        borderColor: "rgba(34,211,238,0.4)",
+                      }}
+                      transition={{ duration: 0.3 }}
+                    >
+                      <div className="w-10 h-10 bg-cyan-500/20 rounded-lg flex items-center justify-center flex-shrink-0">
+                        <Brain
+                          className="w-5 h-5 text-cyan-400"
+                          weight="duotone"
+                        />
+                      </div>
+                      <div>
+                        <div className="text-2xl font-bold text-white">
+                          24/7
+                        </div>
+                        <div className="text-xs text-gray-400">
+                          AI Monitoring
+                        </div>
+                      </div>
+                    </motion.div>
                   </div>
-                  <div className="flex items-start gap-2">
-                    <div className="w-1.5 h-1.5 rounded-full bg-cyan-400 mt-1.5 flex-shrink-0" />
-                    <span>
-                      Learns from usage patterns — suggests the best-fit trainer
-                      instantly
-                    </span>
+
+                  {/* Capabilities */}
+                  <div className="pt-4 border-t border-white/10">
+                    <h4 className="text-sm font-semibold text-white mb-3">
+                      Key Capabilities
+                    </h4>
+                    <div className="space-y-2">
+                      <div className="flex items-start gap-2">
+                        <div className="w-1.5 h-1.5 rounded-full bg-blue-400 mt-1.5 flex-shrink-0" />
+                        <span className="text-xs text-gray-300">
+                          Auto-extracts skills & certifications
+                        </span>
+                      </div>
+                      <div className="flex items-start gap-2">
+                        <div className="w-1.5 h-1.5 rounded-full bg-violet-400 mt-1.5 flex-shrink-0" />
+                        <span className="text-xs text-gray-300">
+                          Detects gaps & suggests updates
+                        </span>
+                      </div>
+                      <div className="flex items-start gap-2">
+                        <div className="w-1.5 h-1.5 rounded-full bg-cyan-400 mt-1.5 flex-shrink-0" />
+                        <span className="text-xs text-gray-300">
+                          Instant trainer matching
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
+
+              {/* Right Panel: Prominent Video */}
+              <motion.div
+                className="lg:col-span-3"
+                initial={{ opacity: 0, x: 50 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 1, duration: 0.8 }}
+              >
+                <div className="bg-gradient-to-br from-slate-900/50 to-slate-800/30 backdrop-blur-xl border border-white/10 rounded-2xl p-6 h-full">
+                  <div className="mb-6">
+                    <h3 className="text-2xl font-bold text-white mb-3">
+                      {/* cspell:disable-next-line */}
+                      See Savoira In Action
+                    </h3>
+                    <p className="text-gray-400 text-sm">
+                      Watch how our AI transforms L&D operations and automates
+                      profile management
+                    </p>
+                  </div>
+
+                  <motion.div
+                    className="relative rounded-2xl overflow-hidden bg-gradient-to-br from-slate-800 to-slate-900 aspect-video flex items-center justify-center group"
+                    whileHover={{
+                      scale: 1.01,
+                      boxShadow: "0 25px 80px rgba(34, 211, 238, 0.4)",
+                    }}
+                    transition={{ duration: 0.4, ease: "easeOut" }}
+                  >
+                    <video
+                      ref={videoRef}
+                      src={videoPath}
+                      loop
+                      muted
+                      playsInline
+                      preload="metadata"
+                      className="w-full h-full object-cover rounded-2xl"
+                      style={{ filter: "brightness(0.95)" }}
+                      onPlay={() => {
+                        setIsPlaying(true);
+                        setShowControls(false);
+                        setTimeout(() => setShowControls(true), 3000);
+                      }}
+                      onPause={() => {
+                        setIsPlaying(false);
+                        setShowControls(true);
+                      }}
+                      onError={(e) => {
+                        console.error("Video failed to load:", e);
+                        e.currentTarget.style.display = "none";
+                        const fallback = e.currentTarget
+                          .nextElementSibling as HTMLElement;
+                        if (fallback) fallback.style.display = "flex";
+                      }}
+                      onClick={handlePlayPause}
+                    >
+                      Your browser does not support the video tag.
+                    </video>
+
+                    {/* Fallback content if video fails to load */}
+                    <div className="hidden w-full h-full bg-gradient-to-br from-slate-700 to-slate-800 rounded-2xl flex-col items-center justify-center text-center p-8">
+                      <div className="w-16 h-16 bg-slate-600 rounded-full flex items-center justify-center mb-4">
+                        <div className="w-0 h-0 border-l-[12px] border-l-white border-t-[8px] border-t-transparent border-b-[8px] border-b-transparent ml-1" />
+                      </div>
+                      <h4 className="text-white font-semibold mb-2">
+                        Demo Video
+                      </h4>
+                      <p className="text-gray-400 text-sm">
+                        Video preview coming soon
+                      </p>
+                      <p className="text-gray-500 text-xs mt-2">
+                        {/* cspell:disable-next-line */}
+                        Experience Savoira's AI-powered L&D automation
+                      </p>
+                    </div>
+
+                    {/* Video overlay */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent" />
+
+                    {/* Play/Pause button overlay */}
+                    {showControls && (
+                      <div
+                        className="absolute inset-0 flex items-center justify-center"
+                        onClick={handlePlayPause}
+                      >
+                        <div className="w-20 h-20 bg-black/40 backdrop-blur-sm rounded-full flex items-center justify-center border-2 border-white/30 hover:border-white/60 hover:bg-black/60 transition-all duration-300 cursor-pointer shadow-xl">
+                          {isPlaying ? (
+                            // Pause icon
+                            <div className="flex gap-1">
+                              <div className="w-1.5 h-4 bg-white" />
+                              <div className="w-1.5 h-4 bg-white" />
+                            </div>
+                          ) : (
+                            // Play icon
+                            <div className="w-0 h-0 border-l-[14px] border-l-white border-t-[9px] border-t-transparent border-b-[9px] border-b-transparent ml-1" />
+                          )}
+                        </div>
+                      </div>
+                    )}
+
+                    {/* Video controls overlay */}
+                    {showControls && (
+                      <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between bg-black/50 backdrop-blur-sm rounded-lg px-4 py-2 transition-opacity duration-300">
+                        <div className="flex items-center gap-3">
+                          <div
+                            className="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center cursor-pointer hover:bg-white/30 transition-colors"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              handlePlayPause();
+                            }}
+                          >
+                            {isPlaying ? (
+                              // Pause icon
+                              <div className="flex gap-0.5">
+                                <div className="w-1 h-2 bg-white" />
+                                <div className="w-1 h-2 bg-white" />
+                              </div>
+                            ) : (
+                              // Play icon
+                              <div className="w-0 h-0 border-l-[6px] border-l-white border-t-[4px] border-t-transparent border-b-[4px] border-b-transparent ml-0.5" />
+                            )}
+                          </div>
+                          <div className="text-xs text-white font-medium">
+                            2:34
+                          </div>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <div className="w-6 h-6 bg-white/20 rounded cursor-pointer hover:bg-white/30 transition-colors flex items-center justify-center">
+                            <div className="text-xs text-white">⚙</div>
+                          </div>
+                          <div className="w-6 h-6 bg-white/20 rounded cursor-pointer hover:bg-white/30 transition-colors flex items-center justify-center">
+                            <div className="text-xs text-white">⛶</div>
+                          </div>
+                        </div>
+                      </div>
+                    )}
+                  </motion.div>
+
+                  <div className="mt-4 flex items-center justify-between">
+                    <div className="text-sm text-gray-400">
+                      Experience the future of L&D automation
+                    </div>
+                    <div className="text-xs text-gray-500 bg-slate-800/50 px-3 py-1 rounded-full">
+                      2:34 min
+                    </div>
                   </div>
                 </div>
               </motion.div>
@@ -711,6 +800,12 @@ export function HeroSection({
           </div>
         </motion.div>
       </div>
+
+      {/* Partner Modal */}
+      <PartnerModal
+        isOpen={isPartnerModalOpen}
+        onClose={() => setIsPartnerModalOpen(false)}
+      />
     </section>
   );
 }

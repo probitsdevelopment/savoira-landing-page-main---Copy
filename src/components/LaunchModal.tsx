@@ -22,17 +22,35 @@ export function LaunchModal({ open, onOpenChange }: LaunchModalProps) {
     setIsSubmitting(true);
 
     try {
-      // TODO: Replace with your actual API endpoint
-      await new Promise((resolve) => setTimeout(resolve, 1500));
-
-      toast.success("🎉 Welcome to the Wait List!", {
-        description: "We'll email you on November 17th when we launch!",
-        duration: 5000,
+      // Send data to SendGrid API
+      const response = await fetch("http://localhost:3001/api/send-email", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          type: "launch",
+          fullName: formData.name,
+          email: formData.email,
+          phone: formData.phone,
+        }),
       });
 
-      setFormData({ name: "", email: "", phone: "" });
-      onOpenChange(false);
+      const result = await response.json();
+
+      if (response.ok && result.success) {
+        toast.success("🎉 Welcome to the Wait List!", {
+          description: "We'll email you on November 17th when we launch!",
+          duration: 5000,
+        });
+
+        setFormData({ name: "", email: "", phone: "" });
+        onOpenChange(false);
+      } else {
+        throw new Error(result.message || "Failed to submit form");
+      }
     } catch (error) {
+      console.error("Form submission error:", error);
       toast.error("Oops! Something went wrong.", {
         description: "Please try again or contact support.",
       });
@@ -219,7 +237,7 @@ export function LaunchModal({ open, onOpenChange }: LaunchModalProps) {
                       value={formData.phone}
                       onChange={handleChange}
                       required
-                      placeholder="+1 (555) 000-0000"
+                      placeholder="+91 98765 43210"
                       className="w-full px-4 py-3.5 bg-white/5 border border-white/20 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all hover:bg-white/10"
                     />
                   </motion.div>
