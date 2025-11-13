@@ -17,8 +17,8 @@ import videoPath from "@/assets/videos/videos.mp4";
 import { PartnerModal } from "@/components/PartnerModal";
 
 interface HeroSectionProps {
-  onDemoClick: () => void;
-  onExploreClick: () => void;
+  _onDemoClick?: () => void;
+  _onExploreClick?: () => void;
   onLaunchClick: () => void;
 }
 
@@ -203,8 +203,8 @@ const DataStream = () => (
 );
 
 export function HeroSection({
-  onDemoClick,
-  onExploreClick,
+  _onDemoClick,
+  _onExploreClick,
   onLaunchClick,
 }: HeroSectionProps) {
   const [isPlaying, setIsPlaying] = useState(false);

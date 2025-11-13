@@ -1,6 +1,3 @@
-import { useState } from "react";
-import { Toaster } from "@/components/ui/sonner";
-import { DemoModal } from "@/components/DemoModal";
 import { Footer } from "@/components/Footer";
 import { HeroSection } from "@/components/sections/HeroSection";
 import { DashboardSection } from "@/components/sections/DashboardSection";

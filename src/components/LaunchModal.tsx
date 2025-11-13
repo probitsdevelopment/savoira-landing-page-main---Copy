@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { X, Rocket, Calendar, Sparkles } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
@@ -49,7 +49,7 @@ export function LaunchModal({ open, onOpenChange }: LaunchModalProps) {
       } else {
         throw new Error(result.message || "Failed to submit form");
       }
-    } catch (error) {
+    } catch {
       // Error already handled by toast notification
       toast.error("Oops! Something went wrong.", {
         description: "Please try again or contact support.",

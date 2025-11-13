@@ -2,10 +2,10 @@ import { Footer } from "@/components/Footer";
 import { CaseStudiesSection } from "@/components/sections/CaseStudiesSection";
 
 interface CaseStudiesPageProps {
-  onDemoClick: () => void;
+  _onDemoClick?: () => void;
 }
 
-export function CaseStudiesPage({ onDemoClick }: CaseStudiesPageProps) {
+export function CaseStudiesPage({ _onDemoClick }: CaseStudiesPageProps) {
   return (
     <>
       <main className="pt-20">

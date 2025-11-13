@@ -20,28 +20,9 @@ export function BlogCard({ blog }: BlogCardProps) {
     ? Math.ceil(blog.points.length * 0.5)
     : 5;
 
-  // Log when component mounts/updates
-  console.log("BlogCard rendered:", {
-    id: blog.id,
-    title: blog.title,
-    slug: blog.slug,
-    slugExists: !!blog.slug,
-    blogObject: blog,
-  });
-
   const handleReadMoreClick = () => {
     // Use ID instead of slug since slug is not available from Strapi
     const targetUrl = `/blogs/${blog.id}`;
-
-    console.log("==========================================");
-    console.log("READ MORE BUTTON CLICKED!");
-    console.log("Blog ID:", blog.id);
-    console.log("Blog Title:", blog.title);
-    console.log("Blog Slug:", blog.slug);
-    console.log("Using ID for URL:", blog.id);
-    console.log("Target URL:", targetUrl);
-    console.log("==========================================");
-
     navigate(targetUrl);
   };
 

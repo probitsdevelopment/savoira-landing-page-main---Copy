@@ -5,13 +5,9 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import {
   TrendUp,
-  Users,
   Clock,
-  ChartLine,
   ArrowRight,
   CheckCircle,
-  Quotes,
-  Building,
   GlobeHemisphereWest,
   Star,
   Target,

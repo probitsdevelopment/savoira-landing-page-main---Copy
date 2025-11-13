@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
@@ -6,10 +6,6 @@ import {
   X,
   User,
   Envelope,
-  Phone,
-  Building,
-  MapPin,
-  Users,
   ArrowRight,
   CheckCircle,
 } from "@phosphor-icons/react";
@@ -93,7 +89,7 @@ export function PartnerModal({ isOpen, onClose }: PartnerModalProps) {
       } else {
         throw new Error(result.message || "Failed to submit form");
       }
-    } catch (error) {
+    } catch {
       // Error already handled by toast notification
       toast.error("Oops! Something went wrong.", {
         description: "Please try again or contact support.",
