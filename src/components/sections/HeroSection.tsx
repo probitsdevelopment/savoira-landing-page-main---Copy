@@ -696,7 +696,7 @@ export function HeroSection({
                         setShowControls(true);
                       }}
                       onError={(e) => {
-                        console.error("Video failed to load:", e);
+                        // Handle video loading error gracefully
                         e.currentTarget.style.display = "none";
                         const fallback = e.currentTarget
                           .nextElementSibling as HTMLElement;
