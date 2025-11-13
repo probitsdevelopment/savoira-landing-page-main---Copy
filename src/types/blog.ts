@@ -4,7 +4,7 @@ export interface Blog {
   slug: string;
   excerpt: string;
   image: string;
-  content: any[];
+  content: Record<string, unknown>[];
   author: string;
   category: string;
   publishedAt: string;

@@ -1,15 +1,10 @@
-import { useState, useEffect } from "react";
-import { Card } from "@/components/ui/card";
+import React, { useState, useEffect } from "react";
 import {
   CheckCircle,
   Bell,
   Target,
   Laptop,
   Users,
-  Clock,
-  Archive,
-  ArrowRight,
-  User,
 } from "@phosphor-icons/react";
 import { motion } from "framer-motion";
 
@@ -218,12 +213,12 @@ export function KaryaBoardSection() {
     setDraggedOverColumn(null);
   };
 
-  const handleDragOver = (e: any) => {
+  const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
     e.dataTransfer.dropEffect = "move";
   };
 
-  const handleDragEnter = (e: any, status: Status) => {
+  const handleDragEnter = (e: React.DragEvent<HTMLDivElement>, status: Status) => {
     e.preventDefault();
     setDraggedOverColumn(status);
     // Add visual feedback
@@ -232,7 +227,7 @@ export function KaryaBoardSection() {
     element.style.transition = "transform 0.2s ease";
   };
 
-  const handleDragLeave = (e: any) => {
+  const handleDragLeave = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
     // Only clear if we're actually leaving the column
     if (!e.currentTarget.contains(e.relatedTarget as Node)) {
@@ -260,7 +255,7 @@ export function KaryaBoardSection() {
       .toUpperCase();
   };
 
-  const TaskCard = ({ task }: { task: Task }) => (
+    const TaskCard = ({ task }: { task: Task }) => (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{
@@ -280,46 +275,48 @@ export function KaryaBoardSection() {
         damping: 25,
         duration: 0.4,
       }}
-      className={`task-card bg-gradient-to-br from-slate-800 to-slate-900 border border-slate-700 p-4 rounded-xl cursor-grab active:cursor-grabbing hover:border-blue-400/50 hover:shadow-xl ${
-        draggedTask === task.id
-          ? "ring-2 ring-blue-400 shadow-2xl border-blue-400"
-          : ""
-      } ${task.status === "archive" ? "opacity-70" : ""} ${
-        draggedTask && draggedTask !== task.id
-          ? "pointer-events-none opacity-60"
-          : ""
-      }`}
-      draggable
-      onDragStart={(e: any) => {
-        handleDragStart(task.id);
-        e.dataTransfer.setData("text/plain", task.id);
-        e.dataTransfer.effectAllowed = "move";
-        // Create enhanced ghost image with smooth styling
-        if (e.currentTarget) {
-          const dragImage = e.currentTarget.cloneNode(true) as HTMLElement;
-          dragImage.style.transform = "rotate(3deg) scale(1.05)";
-          dragImage.style.opacity = "0.9";
-          dragImage.style.position = "absolute";
-          dragImage.style.top = "-2000px";
-          dragImage.style.boxShadow = "0 25px 60px rgba(59, 130, 246, 0.4)";
-          dragImage.style.borderRadius = "16px";
-          dragImage.style.border = "2px solid rgb(59, 130, 246)";
-          dragImage.style.zIndex = "9999";
-          document.body.appendChild(dragImage);
-          e.dataTransfer.setDragImage(
-            dragImage,
-            e.currentTarget.offsetWidth / 2,
-            e.currentTarget.offsetHeight / 2
-          );
-          setTimeout(() => {
-            if (document.body.contains(dragImage)) {
-              document.body.removeChild(dragImage);
-            }
-          }, 100);
-        }
-      }}
-      onDragEnd={handleDragEnd}
     >
+      <div
+        className={`task-card bg-gradient-to-br from-slate-800 to-slate-900 border border-slate-700 p-4 rounded-xl cursor-grab active:cursor-grabbing hover:border-blue-400/50 hover:shadow-xl ${
+          draggedTask === task.id
+            ? "ring-2 ring-blue-400 shadow-2xl border-blue-400"
+            : ""
+        } ${task.status === "archive" ? "opacity-70" : ""} ${
+          draggedTask && draggedTask !== task.id
+            ? "pointer-events-none opacity-60"
+            : ""
+        }`}
+        draggable
+        onDragStart={(e: React.DragEvent<HTMLDivElement>) => {
+          handleDragStart(task.id);
+          e.dataTransfer.setData("text/plain", task.id);
+          e.dataTransfer.effectAllowed = "move";
+          // Create enhanced ghost image with smooth styling
+          if (e.currentTarget) {
+            const dragImage = e.currentTarget.cloneNode(true) as HTMLElement;
+            dragImage.style.transform = "rotate(3deg) scale(1.05)";
+            dragImage.style.opacity = "0.9";
+            dragImage.style.position = "absolute";
+            dragImage.style.top = "-2000px";
+            dragImage.style.boxShadow = "0 25px 60px rgba(59, 130, 246, 0.4)";
+            dragImage.style.borderRadius = "16px";
+            dragImage.style.border = "2px solid rgb(59, 130, 246)";
+            dragImage.style.zIndex = "9999";
+            document.body.appendChild(dragImage);
+            e.dataTransfer.setDragImage(
+              dragImage,
+              e.currentTarget.offsetWidth / 2,
+              e.currentTarget.offsetHeight / 2
+            );
+            setTimeout(() => {
+              if (document.body.contains(dragImage)) {
+                document.body.removeChild(dragImage);
+              }
+            }, 100);
+          }
+        }}
+        onDragEnd={handleDragEnd}
+      >
       <div className="flex items-start justify-between mb-3">
         <h4 className="text-sm font-semibold text-gray-100 flex-1 mr-2 leading-tight">
           {task.title}
@@ -346,6 +343,7 @@ export function KaryaBoardSection() {
           {getInitials(task.owner)}
         </div>
       </div>
+    </div>
     </motion.div>
   );
   return (
@@ -406,7 +404,7 @@ export function KaryaBoardSection() {
                       ? "border-dashed border-slate-600/50 hover:border-blue-400/60 hover:bg-slate-800/40 hover:shadow-lg hover:transform hover:scale-[1.01]"
                       : "border-transparent hover:border-slate-600/30"
                   }`}
-                  onDrop={(e: any) => {
+                  onDrop={(e: React.DragEvent<HTMLDivElement>) => {
                     e.preventDefault();
                     const taskId = e.dataTransfer.getData("text/plain");
                     if (taskId) {

@@ -12,7 +12,7 @@ import {
   Robot,
 } from "@phosphor-icons/react";
 import { motion } from "framer-motion";
-import { useState, useRef } from "react";
+import React, { useState, useRef } from "react";
 import videoPath from "@/assets/videos/videos.mp4";
 import { PartnerModal } from "@/components/PartnerModal";
 
@@ -64,7 +64,7 @@ const FloatingIcon = ({
   delay = 0,
   position,
 }: {
-  icon: any;
+  icon: React.ComponentType<{ className?: string; weight?: string }>;
   className: string;
   delay?: number;
   position: { top?: string; bottom?: string; left?: string; right?: string };

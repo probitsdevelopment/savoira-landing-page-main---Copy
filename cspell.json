@@ -1,0 +1,46 @@
+{
+  "version": "0.2",
+  "language": "en",
+  "words": [
+    "Savoira",
+    "SendGrid",
+    "sendgrid",
+    "waitlist",
+    "Waitlist",
+    "nayana",
+    "rohan",
+    "probits",
+    "TIHA",
+    "tsparser",
+    "tseslint",
+    "phosphor",
+    "lucide",
+    "framer",
+    "tailwindcss",
+    "vite",
+    "tsx",
+    "jsx",
+    "eslint",
+    "dotenv",
+    "cors",
+    "gmail",
+    "API",
+    "env",
+    "localhost",
+    "backend",
+    "frontend"
+  ],
+  "ignorePaths": [
+    "node_modules/**",
+    "dist/**",
+    "build/**",
+    ".git/**",
+    "*.min.js",
+    "package-lock.json"
+  ],
+  "import": [
+    "@cspell/dict-en-us",
+    "@cspell/dict-companies",
+    "@cspell/dict-software-terms"
+  ]
+}
