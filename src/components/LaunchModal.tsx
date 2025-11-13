@@ -50,7 +50,7 @@ export function LaunchModal({ open, onOpenChange }: LaunchModalProps) {
         throw new Error(result.message || "Failed to submit form");
       }
     } catch (error) {
-      console.error("Form submission error:", error);
+      // Error already handled by toast notification
       toast.error("Oops! Something went wrong.", {
         description: "Please try again or contact support.",
       });

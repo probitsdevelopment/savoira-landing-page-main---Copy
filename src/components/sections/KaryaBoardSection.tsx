@@ -199,19 +199,15 @@ export function KaryaBoardSection() {
 
   const handleDragStart = (taskId: string) => {
     setDraggedTask(taskId);
-    console.log("Drag started:", taskId);
   };
 
   const handleDragEnd = () => {
     setDraggedTask(null);
     setDraggedOverColumn(null);
-    console.log("Drag ended");
   };
 
   const handleDrop = (status: Status) => {
     if (!draggedTask) return;
-
-    console.log("Dropping task", draggedTask, "into column", status);
 
     setTasks((prevTasks) =>
       prevTasks.map((task) =>

@@ -94,7 +94,7 @@ export function PartnerModal({ isOpen, onClose }: PartnerModalProps) {
         throw new Error(result.message || "Failed to submit form");
       }
     } catch (error) {
-      console.error("Form submission error:", error);
+      // Error already handled by toast notification
       toast.error("Oops! Something went wrong.", {
         description: "Please try again or contact support.",
         duration: 5000,
